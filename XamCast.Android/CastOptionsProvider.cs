@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Android.Content;
+using Android.Gms.Cast;
 using Android.Gms.Cast.Framework;
 using Android.Runtime;
 
@@ -16,11 +17,21 @@ namespace XamCast.Droid
 
         public CastOptions GetCastOptions(Context appContext)
         {
+
+            var launchOptions = new LaunchOptions.Builder()
+                .Build();
+
+
             var castOptions = new CastOptions.Builder()
+                .SetLaunchOptions(launchOptions)
                 .SetReceiverApplicationId("0A6928D1")
                 .Build();
 
             return castOptions;
+
+            //var castOptions = new CastOptions.Builder()
+            //    .SetReceiverApplicationId(AppConstants.ReceiverID)
+            //    .Build();
         }
     }
 }

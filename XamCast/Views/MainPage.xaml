@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:xct="clr-namespace:Xamarin.CommunityToolkit.UI.Views;assembly=Xamarin.CommunityToolkit"
+             xmlns:local="clr-namespace:XamCast;assembly=XamCast"
              x:Class="XamCast.MainPage">
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness">
@@ -9,7 +9,10 @@
         </OnPlatform>
     </ContentPage.Padding>
     <NavigationPage.TitleView>
-        <Label Text="Hello World Friday List" FontSize="Title"  />
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Hello World Friday List" FontSize="Title"  />
+            <local:MyCastButton />
+        </StackLayout>
     </NavigationPage.TitleView>
 
     <ContentPage.Content>
