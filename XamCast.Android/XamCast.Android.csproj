@@ -77,6 +77,9 @@
     <PackageReference Include="Xamarin.AndroidX.Palette">
       <Version>1.0.0.7</Version>
     </PackageReference>
+    <PackageReference Include="MobCAT.Forms">
+      <Version>1.0.7306</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
@@ -85,6 +88,8 @@
     <Compile Include="Renderers\MyCastButtonRenderer.cs" />
     <Compile Include="Renderers\MyMiniPlayerRenderer.cs" />
     <Compile Include="CastOptionsProvider.cs" />
+    <Compile Include="Services\ChromecastService.cs" />
+    <Compile Include="PlayerActivity\PlayerActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -110,11 +115,17 @@
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
+    <AndroidResource Include="Resources\layout\playerPageLayout.xml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />
     <Folder Include="Renderers\" />
     <Folder Include="Resources\layout\" />
+    <Folder Include="PlayerActivity\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\XamCast\XamCast.csproj">

@@ -5,6 +5,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.MobCAT;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using XamCast.Models;
 
@@ -13,6 +15,7 @@ namespace XamCast
     public partial class MainPage : ContentPage
     {
         public ObservableCollection<MediaInfo> MediaSourcesList = new ObservableCollection<MediaInfo>();
+        IChromecastService _castHelper = ServiceContainer.Resolve<IChromecastService>();
 
         public MainPage()
         {
@@ -88,7 +91,11 @@ namespace XamCast
         {
             MediaInfo previousSelection = e.PreviousSelection.FirstOrDefault() as MediaInfo;
             MediaInfo currentSelection = e.CurrentSelection.FirstOrDefault() as MediaInfo;
-            await Navigation.PushAsync(new PlayerPage(currentSelection));
+
+            if (DeviceInfo.Platform == DevicePlatform.iOS)
+                await Navigation.PushAsync(new PlayerPage(currentSelection));
+            else
+                _castHelper.OpenPlayerPage(currentSelection);
         }
     }
 }
