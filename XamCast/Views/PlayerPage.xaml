@@ -3,6 +3,7 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:xct="clr-namespace:Xamarin.CommunityToolkit.UI.Views;assembly=Xamarin.CommunityToolkit"
+    xmlns:local="clr-namespace:XamCast;assembly=XamCast"
     x:Class="XamCast.PlayerPage">
 
     <ContentPage.Padding>
@@ -10,14 +11,15 @@
             <On Platform="iOS" Value="0,20,0,0" />
         </OnPlatform>
     </ContentPage.Padding>
-        <Grid>
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
             <RowDefinition Height="50" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Label Text="Chromecast Away!" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Row="0"/>
+        <!--<Label Text="Chromecast Away!" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Row="0"/>-->
+        <local:MyCastButton x:Name="MyCastButton" VerticalOptions="CenterAndExpand" Grid.Row="0"/>
         <Label x:Name="PlayerVideName" FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Row="1"/>
         <xct:MediaElement x:Name="PlayerControl"
                       ShowsPlaybackControls="True"
@@ -26,6 +28,26 @@
                       MediaEnded="OnMediaEnded"
                       SeekCompleted="OnSeekCompleted"
                           Grid.Row="2"/>
+
+
+        <local:MyMiniPlayer x:Name="miniPlayerController" VerticalOptions="End" HorizontalOptions="FillAndExpand"
+                                BackgroundColor="Transparent" Grid.Row="3">
+            <local:MyMiniPlayer.HeightRequest>
+                <OnPlatform x:TypeArguments="x:Double">
+                    <On Platform="iOS">55</On>
+                    <On Platform="Android">60</On>
+                </OnPlatform>
+            </local:MyMiniPlayer.HeightRequest>
+
+            <local:MyMiniPlayer.Margin>
+                <OnPlatform x:TypeArguments="Thickness"
+                                                            Android="0,0,0,10"
+                                                            iOS="0,0,0,0" >
+                </OnPlatform>
+            </local:MyMiniPlayer.Margin>
+        </local:MyMiniPlayer>
     </Grid>
+
+
 
 </ContentPage>
