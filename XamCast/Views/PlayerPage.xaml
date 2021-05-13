@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:xct="clr-namespace:Xamarin.CommunityToolkit.UI.Views;assembly=Xamarin.CommunityToolkit"
+    x:Class="XamCast.PlayerPage">
+
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness">
+            <On Platform="iOS" Value="0,20,0,0" />
+        </OnPlatform>
+    </ContentPage.Padding>
+        <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Label Text="Chromecast Away!" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Row="0"/>
+        <Label x:Name="PlayerVideName" FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Row="1"/>
+        <xct:MediaElement x:Name="PlayerControl"
+                      ShowsPlaybackControls="True"
+                      MediaOpened="OnMediaOpened"
+                      MediaFailed="OnMediaFailed"
+                      MediaEnded="OnMediaEnded"
+                      SeekCompleted="OnSeekCompleted"
+                          Grid.Row="2"/>
+    </Grid>
+
+</ContentPage>

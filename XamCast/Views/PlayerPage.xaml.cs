@@ -1,19 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Xamarin.CommunityToolkit.Core;
 using Xamarin.Forms;
+using XamCast.Models;
 
 namespace XamCast
 {
-    public partial class MainPage : ContentPage
+    public partial class PlayerPage : ContentPage
     {
-        public MainPage()
+        public PlayerPage(MediaInfo media)
         {
             InitializeComponent();
+            PlayerControl.Source = MediaSource.FromUri(media.SourceURL);
+            PlayerVideName.Text = media.DisplayName;
         }
+
 
         void OnMediaOpened(object sender, EventArgs e)
         {
