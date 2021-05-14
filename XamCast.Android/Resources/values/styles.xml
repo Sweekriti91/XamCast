@@ -15,4 +15,32 @@
          which is used to tint widgets -->
     <!--<item name="colorAccent">#FF4081</item>-->
   </style>
+
+       <style name="Theme.CastVideosDark" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimaryDark">#000000</item>
+        <item name="castMiniControllerStyle">@style/CustomCastMiniController</item>
+        <!--<item name="castExpandedControllerStyle">@style/CustomCastExpandedController</item>-->
+      <!--  <item name="castExpandedControllerToolbarStyle">
+            @style/ThemeOverlay.AppCompat.Dark.ActionBar
+        </item>-->
+    </style>
+
+    <style name="MyTheme.Player" parent="MainTheme">
+        <item name="android:colorPrimary">#BA9E5E</item>
+    </style>
+
+    <style name="CustomMediaRouterTheme" parent="Theme.MediaRouter">
+        <item name="mediaRouteButtonStyle">@style/CustomMediaRouteButtonStyle</item>
+    </style>
+
+     <style name="CustomMediaRouteButtonStyle" parent="Widget.MediaRouter.Light.MediaRouteButton">
+        <item name="mediaRouteButtonTint">#BA9E5E</item>
+     </style>
+
+     <style name="CustomCastMiniController" parent="CastMiniController">
+        <item name="castShowImageThumbnail">true</item>
+        <item name="castTitleTextAppearance">@style/TextAppearance.AppCompat.Subhead</item>
+        <item name="castSubtitleTextAppearance">@style/TextAppearance.AppCompat.Caption</item>
+     </style>
+    
 </resources>

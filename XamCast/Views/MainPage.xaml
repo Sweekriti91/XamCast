@@ -16,21 +16,42 @@
     </NavigationPage.TitleView>
 
     <ContentPage.Content>
-        <CollectionView x:Name="MediaSourceCollectionView"
+        <StackLayout>
+            <CollectionView x:Name="MediaSourceCollectionView"
                       SelectionMode="Single"
                       SelectionChanged="MediaSourceCollectionView_SelectionChanged"
                         Margin="0,20,0,0">
-            <CollectionView.ItemsLayout>
-                <LinearItemsLayout Orientation="Vertical"
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical"
                            ItemSpacing="20" />
-            </CollectionView.ItemsLayout>
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-                        <Label Text="{Binding DisplayName}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="Medium"/>
-                    </StackLayout>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                            <Label Text="{Binding DisplayName}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="Medium"/>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+
+            <local:MyMiniPlayer x:Name="miniPlayerController" VerticalOptions="End" HorizontalOptions="FillAndExpand"
+                                BackgroundColor="Transparent" Grid.Row="3">
+            <local:MyMiniPlayer.HeightRequest>
+                <OnPlatform x:TypeArguments="x:Double">
+                    <On Platform="iOS">55</On>
+                    <On Platform="Android">100</On>
+                </OnPlatform>
+            </local:MyMiniPlayer.HeightRequest>
+
+            <local:MyMiniPlayer.Margin>
+                <OnPlatform x:TypeArguments="Thickness"
+                                                            Android="0,0,0,10"
+                                                            iOS="0,0,0,0" >
+                </OnPlatform>
+            </local:MyMiniPlayer.Margin>
+        </local:MyMiniPlayer>
+
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

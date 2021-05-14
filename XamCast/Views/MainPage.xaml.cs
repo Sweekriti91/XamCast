@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.MobCAT;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration;
 using XamCast.Models;
 
 namespace XamCast
