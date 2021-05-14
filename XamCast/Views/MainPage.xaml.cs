@@ -23,6 +23,7 @@ namespace XamCast
             InitializeComponent();
             CreateListOfThings();
             MediaSourceCollectionView.ItemsSource = MediaSourcesList;
+            _castHelper.SetupChromecast();
         }
 
         void CreateListOfThings()

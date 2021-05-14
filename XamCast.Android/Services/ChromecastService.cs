@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Android.Content;
 using Xamarin.Essentials;
 using XamCast.Models;
@@ -20,7 +21,7 @@ namespace XamCast.Droid.Services
 
         public void SetupChromecast()
         {
-            throw new NotImplementedException();
+            Debug.WriteLine("Leave empty");
         }
 
         public MediaInfo GetPlaybackAsset()
