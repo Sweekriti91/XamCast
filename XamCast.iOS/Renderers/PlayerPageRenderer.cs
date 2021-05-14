@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using AVFoundation;
 using AVKit;
 using CoreGraphics;
@@ -20,6 +21,21 @@ namespace XamCast.iOS.Renderers
 
         AVPlayer avp;
         AVPlayerViewController avpvc;
+        NSUrl url;
+
+        public SessionManager sessionManager;
+        public SessionManagerListener xamaSessionManagerListener;
+        public UIMediaController castMediaController;
+        public MediaInformation castMediaInfo;
+        public VisualElement currentPage;
+
+        // track state as sample does here https://github.com/googlecast/CastVideos-ios/blob/master/CastVideos-swift/Classes/MediaViewController.swift#L18
+        private PlaybackLocation mLocation;
+        public enum PlaybackLocation
+        {
+            LOCAL,
+            REMOTE
+        }
 
         public PlayerPageRenderer()
         {
@@ -39,9 +55,11 @@ namespace XamCast.iOS.Renderers
 
             try
             {
-                SetupEventsAndHooks();
+                SetupChromecastThings();
                 SetupUserInterface();
                 StartVideoPlayback();
+                currentPage = Element;
+                
             }
             catch (Exception ex)
             {
@@ -50,12 +68,22 @@ namespace XamCast.iOS.Renderers
 
             void StartVideoPlayback()
             {
-                avp.Play();
+                if(mLocation == PlaybackLocation.LOCAL)
+                    avp.Play();
+                else
+                {
+                    var hasConnection = sessionManager.HasConnectedSession;
+                    if(hasConnection)
+                    {
+                        mLocation = PlaybackLocation.REMOTE;
+
+                    }
+                }
             }
 
             void SetupUserInterface()
             {
-                var url = NSUrl.FromString(mediaInfo.SourceURL);
+                url = NSUrl.FromString(mediaInfo.SourceURL);
                 avp = new AVPlayer(url);
                 avpvc = new AVPlayerViewController();
                 avpvc.Player = avp;
@@ -68,28 +96,16 @@ namespace XamCast.iOS.Renderers
                 View.AddSubview(castButton);
             }
 
-            void SetupEventsAndHooks()
+            void SetupChromecastThings()
             {
-                //var fairPlayAuthProxy = new BCOVFPSBrightcoveAuthProxy(null, null);
-                //var fps = sDKManager.CreateFairPlaySessionProviderWithAuthorizationProxy(fairPlayAuthProxy, null);
+                //setup Cast session manager
+                sessionManager = CastContext.SharedInstance.SessionManager;
+                xamaSessionManagerListener = new XamSessionManagerListener(this);
+                sessionManager.AddListener(xamaSessionManagerListener);
 
-                ////Create the playback controller
-                //playbackController = sDKManager.CreateFairPlayPlaybackControllerWithAuthorizationProxy(fairPlayAuthProxy);
-                //playbackController.SetAutoPlay(true);
-                //playbackController.SetAutoAdvance(false);
-                //playbackController.Delegate = new BCPlaybackControllerDelegate();
-
-                ////USING CUSTOM GoogleCastManager
-                //GoogleCastManager googleCastManager = new GoogleCastManager();
-                //var gcmPlaybackSession = new XamBCPlaybackSessionConsumer(googleCastManager);
-                //googleCastManager.gcmDelegate = new XamGoogleCastManagerDelegate(playbackController);
-                //playbackController.AddSessionConsumer(gcmPlaybackSession);
-
-                //// Set up our player view. Create with a standard VOD layout.
-                //var options = new BCOVPUIPlayerViewOptions() { ShowPictureInPictureButton = true };
-                //playerView = new BCOVPUIPlayerView(playbackController, options, BCOVPUIBasicControlView.BasicControlViewWithVODLayout());
-                //playerView.Delegate = new BCUIPlaybackViewController();
-                //playerView.PlaybackController = playbackController;
+                //castMediaController 
+                castMediaController = new UIMediaController();
+                castMediaController.Delegate = new XamMediaControllerDelegate();
             }
         }
 
@@ -100,5 +116,148 @@ namespace XamCast.iOS.Renderers
             avp.Dispose();
             avpvc.Dispose();
         }
+
+        public void ClosePage()
+        {
+            currentPage.Navigation.PopAsync();
+        }
+
+        //CreateCastMedia
+        public void CreateMediaInfo()
+        {
+            var videoUrl = mediaInfo.SourceURL;
+            var vname = mediaInfo.DisplayName;
+            var extra = new string[] { "{", "}" };
+            
+
+            var metaData = new MediaMetadata(MediaMetadataType.Generic);
+            metaData.SetString(mediaInfo.DisplayName, MetadataKey.Title);
+            metaData.SetString("Hello World on Fridays!", MetadataKey.Subtitle);
+
+           
+            var builder = new MediaInformationBuilder();
+            builder.ContentId = videoUrl;
+            builder.StreamType = MediaStreamType.Buffered;
+            builder.Metadata = metaData;
+
+            castMediaInfo = builder.Build();
+
+        }
+
+        public void SwitchToLocalPlayback(NSError withError)
+        {
+            Debug.WriteLine("OOPSY Happened! :: " + withError);
+            // set remotemediaclient to null
+            //add logic to resume local play, update tracking 
+        }
+
+        public void SwitchToRemotePlayback()
+        {
+            avp.Pause();
+            CreateMediaInfo();
+            mLocation = PlaybackLocation.REMOTE;
+
+            //ios sample does it via queue, we'll straight up load
+            var castSession = CastContext.SharedInstance.SessionManager.CurrentCastSession;
+            RemoteMediaClient remoteMediaClient = null;
+            var options = new MediaLoadOptions();
+            //options.PlayPosition = currentprogress;
+            options.Autoplay = true;
+
+            if (castSession != null)
+            {
+                remoteMediaClient = castSession.RemoteMediaClient;
+                remoteMediaClient.MediaQueue?.Clear();
+            }
+
+            if (castSession != null && remoteMediaClient != null && castMediaInfo != null)
+                remoteMediaClient.LoadMedia(castMediaInfo, options);
+            else
+                Console.WriteLine("ERROR in SwitchToRemotePlayback");
+
+            ClosePage();
+        }
+
     }
+
+    // MARK: - GCKSessionManagerListener
+    public class XamSessionManagerListener : SessionManagerListener
+    {
+        PlayerPageRenderer playerPage;
+        public XamSessionManagerListener(PlayerPageRenderer pageRenderer)
+        {
+            playerPage = pageRenderer;
+        }
+
+        public override void DidStartSession(SessionManager sessionManager, Session session)
+        {
+            playerPage.SwitchToRemotePlayback();
+
+        }
+
+        public override void DidResumeSession(SessionManager sessionManager, Session session)
+        {
+            playerPage.SwitchToRemotePlayback();
+        }
+
+        public override void DidEndSession(SessionManager sessionManager, Session session, NSError error)
+        {
+            playerPage.SwitchToLocalPlayback(error);
+        }
+
+        public override void DidFailToStartSession(SessionManager sessionManager, Session session, NSError error)
+        {
+            playerPage.SwitchToLocalPlayback(error);
+        }
+    }
+
+    // MARK: - GCKUIMediaControllerDelegate
+    public class XamMediaControllerDelegate : UIMediaControllerDelegate
+    {
+        public XamMediaControllerDelegate()
+        {
+        }
+
+        public override void DidUpdateMediaStatus(UIMediaController mediaController, MediaStatus mediaStatus)
+        {
+            // Once the video has finished, let the delegate know
+            // and attempt to proceed to the next session, if autoAdvance
+            // is enabled
+
+            if (mediaStatus != null)
+            {
+                if (mediaStatus.IdleReason == MediaPlayerIdleReason.Finished)
+                {
+                    //googleCastManager.currentVideo = null;
+                    //var xdelegate = googleCastManager.gcmDelegate;
+                    //if (xdelegate == null)
+                        return;
+
+                    //xdelegate.CurrentCastedVideoDidComplete();
+
+                    //var xplaybackController = xdelegate.playbackController;
+                    //if (xplaybackController != null)
+                    //{
+                    //    if (xplaybackController.AutoAdvance)
+                    //        xplaybackController.AdvanceToNext();
+                    //}
+                }
+
+                if (mediaStatus.IdleReason == MediaPlayerIdleReason.Error)
+                {
+                    //googleCastManager.currentVideo = null;
+                    //var xdelegate = googleCastManager.gcmDelegate;
+                    //if (xdelegate == null)
+                    //    return;
+
+                    //xdelegate.CastedVideoFailedToPlay();
+                }
+
+                //googleCastManager.castStreamPosition = mediaStatus.StreamPosition;
+            }
+            //else
+                //googleCastManager.castStreamPosition = 0;
+        }
+    }
+
 }
