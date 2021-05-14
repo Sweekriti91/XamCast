@@ -90,7 +90,6 @@
     <Compile Include="CastOptionsProvider.cs" />
     <Compile Include="Services\ChromecastService.cs" />
     <Compile Include="PlayerActivity\PlayerActivity.cs" />
-    <Compile Include="Renderers\ExpandedMediaControllerActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

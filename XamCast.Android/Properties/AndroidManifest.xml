@@ -4,8 +4,8 @@
 	<application android:label="XamCast.Android" android:theme="@style/MainTheme">
 		<meta-data android:name="com.google.android.gms.cast.framework.OPTIONS_PROVIDER_CLASS_NAME" android:value="XamCast.Android.CastOptionsProvider" />
 
-		<!-- <activity
-                android:name="XamCast.Android.ExpandedMediaControllerActivity"
+		<activity
+                android:name="com.google.android.gms.cast.framework.media.widget.ExpandedControllerActivity"
                 android:label="XamCast"
                 android:launchMode="singleTask"
                 android:theme="@style/Theme.CastVideosDark"
@@ -13,10 +13,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
             </intent-filter>
-                <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".MainActivity"/>
-        </activity> -->
+        </activity>
 
 	</application>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
