@@ -34,5 +34,9 @@
 	<string>XamCast</string>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>Hi Bluetooth for Cast Please</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Hi Bluetooth for Cast</string>
 </dict>
 </plist>

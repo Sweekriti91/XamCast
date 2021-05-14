@@ -39,7 +39,7 @@
                                 BackgroundColor="Transparent" Grid.Row="3">
             <local:MyMiniPlayer.HeightRequest>
                 <OnPlatform x:TypeArguments="x:Double">
-                    <On Platform="iOS">55</On>
+                    <On Platform="iOS">80</On>
                     <On Platform="Android">100</On>
                 </OnPlatform>
             </local:MyMiniPlayer.HeightRequest>
