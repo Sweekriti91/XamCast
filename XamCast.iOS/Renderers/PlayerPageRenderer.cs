@@ -68,17 +68,16 @@ namespace XamCast.iOS.Renderers
 
             void StartVideoPlayback()
             {
-                if(mLocation == PlaybackLocation.LOCAL)
-                    avp.Play();
-                else
+                var hasConnection = sessionManager.HasConnectedSession;
+                if (hasConnection)
                 {
-                    var hasConnection = sessionManager.HasConnectedSession;
-                    if(hasConnection)
-                    {
-                        mLocation = PlaybackLocation.REMOTE;
-
-                    }
+                    mLocation = PlaybackLocation.REMOTE;
+                    SwitchToRemotePlayback();
+                    ClosePage();
                 }
+
+                if (mLocation == PlaybackLocation.LOCAL)
+                    avp.Play();
             }
 
             void SetupUserInterface()
