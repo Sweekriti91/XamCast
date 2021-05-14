@@ -55,7 +55,6 @@ namespace XamCast.iOS.Renderers
 
             void SetupUserInterface()
             {
-
                 var url = NSUrl.FromString(mediaInfo.SourceURL);
                 avp = new AVPlayer(url);
                 avpvc = new AVPlayerViewController();
@@ -92,6 +91,14 @@ namespace XamCast.iOS.Renderers
                 //playerView.Delegate = new BCUIPlaybackViewController();
                 //playerView.PlaybackController = playbackController;
             }
+        }
+
+        public override void ViewDidDisappear(bool animated)
+        {
+            base.ViewDidDisappear(animated);
+            avp.Pause();
+            avp.Dispose();
+            avpvc.Dispose();
         }
     }
 }
