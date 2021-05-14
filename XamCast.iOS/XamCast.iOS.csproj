@@ -50,7 +50,7 @@
     <CodesignKey>iPhone Developer</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-    <MtouchLink>SdkOnly</MtouchLink>
+    <MtouchLink>None</MtouchLink>
     <MtouchInterpreter>-all</MtouchInterpreter>
     <MtouchSdkVersion>14.5</MtouchSdkVersion>
   </PropertyGroup>
@@ -72,6 +72,8 @@
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ChromecastService.cs" />
+    <Compile Include="Renderers\MyCastButtonRenderer.cs" />
+    <Compile Include="Renderers\MyMiniPlayerRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
@@ -136,7 +138,7 @@
       <Version>1.0.7306</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Google.iOS.Cast">
-      <Version>4.4.6</Version>
+      <Version>4.4.6.1</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
