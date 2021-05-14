@@ -93,11 +93,12 @@ namespace XamCast
         {
             MediaInfo previousSelection = e.PreviousSelection.FirstOrDefault() as MediaInfo;
             MediaInfo currentSelection = e.CurrentSelection.FirstOrDefault() as MediaInfo;
+            _castHelper.SetPlaybackAsset(currentSelection);
 
             if (DeviceInfo.Platform == DevicePlatform.iOS)
-                await Navigation.PushAsync(new PlayerPage(currentSelection));
+                await Navigation.PushAsync(new PlayerPage());
             else
-                _castHelper.OpenPlayerPage(currentSelection);
+                _castHelper.OpenPlayerPage();
         }
     }
 }

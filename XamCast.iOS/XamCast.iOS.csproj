@@ -79,6 +79,7 @@
     <Compile Include="Services\ChromecastService.cs" />
     <Compile Include="Renderers\MyCastButtonRenderer.cs" />
     <Compile Include="Renderers\MyMiniPlayerRenderer.cs" />
+    <Compile Include="Renderers\PlayerPageRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />

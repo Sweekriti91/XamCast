@@ -6,7 +6,8 @@ namespace XamCast
     public interface IChromecastService
     {
         void SetupChromecast();
-        void OpenPlayerPage(MediaInfo asset);
+        void OpenPlayerPage();
         MediaInfo GetPlaybackAsset();
+        void SetPlaybackAsset(MediaInfo asset);
     }
 }

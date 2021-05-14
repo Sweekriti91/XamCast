@@ -10,9 +10,8 @@ namespace XamCast.Droid.Services
     {
         MediaInfo media { get; set; }
 
-        public void OpenPlayerPage(MediaInfo asset)
+        public void OpenPlayerPage()
         {
-            media = asset;
 
             Intent intent = new Intent(Platform.CurrentActivity,typeof(PlayerActivity));
             intent.AddFlags(ActivityFlags.NewTask);
@@ -27,6 +26,11 @@ namespace XamCast.Droid.Services
         public MediaInfo GetPlaybackAsset()
         {
             return media;
+        }
+
+        public void SetPlaybackAsset(MediaInfo asset)
+        {
+            media = asset;
         }
     }
 }

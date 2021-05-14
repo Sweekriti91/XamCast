@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using AVFoundation;
 using Foundation;
 using Microsoft.MobCAT;
 using UIKit;
@@ -24,6 +24,10 @@ namespace XamCast.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            var errOut = new NSError();
+            AVAudioSession.SharedInstance().SetCategory(AVAudioSession.CategoryPlayback, AVAudioSession.ModeMoviePlayback, AVAudioSessionRouteSharingPolicy.LongForm, options: 0, out errOut);
+
+
             global::Xamarin.Forms.Forms.Init();
             ServiceContainer.Register<IChromecastService>(() => new ChromecastService());
             LoadApplication(new App());

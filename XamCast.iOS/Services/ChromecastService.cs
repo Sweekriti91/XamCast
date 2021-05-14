@@ -6,14 +6,21 @@ namespace XamCast.iOS.Services
 {
     public class ChromecastService : IChromecastService
     {
+        MediaInfo media { get; set; }
+
         public MediaInfo GetPlaybackAsset()
+        {
+            return media;
+        }
+
+        public void OpenPlayerPage()
         {
             throw new NotImplementedException();
         }
 
-        public void OpenPlayerPage(MediaInfo asset)
+        public void SetPlaybackAsset(MediaInfo asset)
         {
-            throw new NotImplementedException();
+            media = asset;
         }
 
         public void SetupChromecast()
