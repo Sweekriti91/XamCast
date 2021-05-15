@@ -31,4 +31,9 @@ jobs:
 
       - name: Build
         run: msbuild XamCast.Android/XamCast.Android.csproj /t:PackageForAndroid /p:Configuration=Debug
-  
+        
+      - uses: actions/upload-artifact@v2
+        with:
+          name: my-artifact-android
+          path: XamCast.Android/bin/Debug/*.apk
+
