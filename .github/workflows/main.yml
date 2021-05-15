@@ -31,6 +31,12 @@ jobs:
         with:
           dotnet-version: '5.0.x'
 
+      - shell: bash
+        env:
+          NUGET_PAT: ${{ secrets.nugetPAT }}
+        run: |
+          nuget sources add -name "private-packages" -Source https://nuget.pkg.github.com/xamcat/index.json -StorePasswordInClearText -Username Sweekriti91 -Password "$NUGETPAT"
+
       - name: Install dependencies
         run: nuget restore XamCast.sln
 
