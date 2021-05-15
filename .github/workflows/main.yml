@@ -1,4 +1,4 @@
-name: Build Xamarin
+name: Build Xamarin.iOS
 
 on:
   push:
@@ -31,27 +31,3 @@ jobs:
 
       - name: Build
         run: msbuild XamCast.iOS/XamCast.iOS.csproj /p:Configuration=Debug /p:Platform=iPhoneSimulator /t:Rebuild
-        
-  buildandroid:
-    runs-on: macos-latest
-    
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Setup .NET Core SDK 5.0.x
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '5.0.x'
-          
-      - shell: bash
-        env:
-          NUGETPAT: ${{ secrets.NUGETPAT }}
-        run: |
-          nuget sources add -name "private-packages" -Source https://nuget.pkg.github.com/xamcat/index.json -StorePasswordInClearText -Username Sweekriti91 -Password $NUGETPAT
-
-      - name: Install dependencies
-        run: nuget restore XamCast.sln
-
-      - name: Build
-        run: msbuild XamCast.Android/XamCast.Android.csproj /t:PackageForAndroid /p:Configuration=Debug
-  
