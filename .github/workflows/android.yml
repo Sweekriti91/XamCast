@@ -1,0 +1,39 @@
+name: Build Xamarin.Android
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  workflow_dispatch:
+
+jobs:
+  buildandroid:
+    runs-on: macos-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup .NET Core SDK 5.0.x
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '5.0.x'
+          
+      - shell: bash
+        env:
+          NUGETPAT: ${{ secrets.NUGETPAT }}
+        run: |
+          nuget sources add -name "private-packages" -Source https://nuget.pkg.github.com/xamcat/index.json -StorePasswordInClearText -Username Sweekriti91 -Password $NUGETPAT
+
+      - name: Install dependencies
+        run: nuget restore XamCast.sln
+
+      - name: Build
+        run: msbuild XamCast.Android/XamCast.Android.csproj /t:PackageForAndroid /p:Configuration=Debug
+        
+      - uses: actions/upload-artifact@v2
+        with:
+          name: my-artifact-android
+          path: XamCast.Android/bin/Debug/*.apk
+
