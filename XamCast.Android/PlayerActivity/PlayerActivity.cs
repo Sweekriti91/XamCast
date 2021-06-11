@@ -31,7 +31,6 @@ namespace XamCast.Droid
         public static CastContext castContext;
         public static CastSession castSession;
         public static CastSessionManagerListener castSessionManagerListener;
-        //public static CustomCastMediaManager customCastMediaManager;
 
         //ENUMs and VARIABLES to handle Cast Playback vs local Playback
         //From Google Sample : https://github.com/googlecast/CastVideos-android/blob/master/src/com/google/sample/cast/refplayer/mediaplayer/LocalPlayerActivity.java#L111
@@ -128,8 +127,6 @@ namespace XamCast.Droid
                 remoteClient.Load(CreateMediaInfo(), true);
                 remoteClient.Seek(videoView.CurrentPosition);
                 remoteClient.Play();
-
-                //CastClosePlayerActivity();
             }
 
         }
@@ -189,8 +186,6 @@ namespace XamCast.Droid
                 castSession = session as CastSession;
 
                 OnApplicationConnected(castSession);
-
-                //playeractivity.CastClosePlayerActivity();
             }
 
             public void OnSessionStartFailed(Java.Lang.Object session, int error)
@@ -233,8 +228,6 @@ namespace XamCast.Droid
             private void OnApplicationDisconnected()
             {
                 Debug.WriteLine("OOPSY Happened!");
-
-                //playeractivity.CastClosePlayerActivity();
             }
         }
     }

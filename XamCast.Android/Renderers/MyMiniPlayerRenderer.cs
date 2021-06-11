@@ -41,8 +41,6 @@ namespace XamCast.Droid.Renderers
 
                     view = activity.LayoutInflater.Inflate(Resource.Layout.miniplayerLayout, null);
 
-                    var test = view.FindViewById(Resource.Id.castMiniController);
-
                     linearLayout = view.FindViewById<LinearLayout>(Resource.Layout.miniplayerLayout);
                     SetNativeControl(view);
                 }

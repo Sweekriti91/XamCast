@@ -145,7 +145,7 @@ namespace XamCast.iOS.Renderers
 
         public void SwitchToLocalPlayback(NSError withError)
         {
-            Debug.WriteLine("OOPSY Happened! :: " + withError);
+            Debug.WriteLine("OOPSY Happened to Cast Connect! :: " + withError);
             // set remotemediaclient to null
             //add logic to resume local play, update tracking 
         }
@@ -227,35 +227,20 @@ namespace XamCast.iOS.Renderers
             {
                 if (mediaStatus.IdleReason == MediaPlayerIdleReason.Finished)
                 {
-                    //googleCastManager.currentVideo = null;
-                    //var xdelegate = googleCastManager.gcmDelegate;
-                    //if (xdelegate == null)
+                    //add own logic to resume local play, update tracking etc as needed
                         return;
 
-                    //xdelegate.CurrentCastedVideoDidComplete();
-
-                    //var xplaybackController = xdelegate.playbackController;
-                    //if (xplaybackController != null)
-                    //{
-                    //    if (xplaybackController.AutoAdvance)
-                    //        xplaybackController.AdvanceToNext();
-                    //}
+                
                 }
 
                 if (mediaStatus.IdleReason == MediaPlayerIdleReason.Error)
                 {
-                    //googleCastManager.currentVideo = null;
-                    //var xdelegate = googleCastManager.gcmDelegate;
-                    //if (xdelegate == null)
-                    //    return;
+                    Debug.WriteLine("OOPSY Happened to Cast Playback! :: " + MediaPlayerIdleReason.Error);
 
-                    //xdelegate.CastedVideoFailedToPlay();
+                    return;
                 }
-
-                //googleCastManager.castStreamPosition = mediaStatus.StreamPosition;
             }
-            //else
-                //googleCastManager.castStreamPosition = 0;
+            
         }
     }
 

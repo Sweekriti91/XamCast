@@ -46,9 +46,6 @@ namespace XamCast.Droid.Renderers
                     mediaRouter.AddCallback(mediaRouteSelector, mediaRouterCallback, MediaRouter.CallbackFlagPerformActiveScan);
                     mediaRouteButton.RouteSelector = mediaRouteSelector;
 
-                    //CastButtonFactory.SetUpMediaRouteButton(Context, mediaRouteButton);
-                    //var castContext = CastContext.SharedInstance;
-                    //castContext.
                     linearLayout = new LinearLayout(Context);
                     linearLayout.AddView(mediaRouteButton);
 
@@ -64,17 +61,12 @@ namespace XamCast.Droid.Renderers
 
             public override void OnRouteSelected(MediaRouter router, MediaRouter.RouteInfo route)
             {
-                //base.OnRouteSelected(router, route);
                 castDevice = CastDevice.GetFromBundle(route.Extras);
                 System.Diagnostics.Debug.WriteLine("SELECTED; Connected to: " + route.Name);
-
-
-
             }
 
             public override void OnRouteUnselected(MediaRouter router, MediaRouter.RouteInfo route)
             {
-                //base.OnRouteUnselected(router, route);
                 System.Diagnostics.Debug.WriteLine("UNSELECTED");
                 castDevice = null;
             }
