@@ -50,6 +50,8 @@ The two UI Components that are native but we will show in our Xamarin.Forms shar
 
 ## Xamarin.iOS 
 
+<img src='Images/iOS_Cast_DEMO.gif'>
+
 ### Setup Player
 
 For the Xamarin.iOS app, the implementation shows how to implement the player page as a full Page Renderer. [PlayerPageRender](XamCast.iOS/Renderers/PlayerPageRenderer.cs) is where we implement the Video Player for local playback , the Cast Button and setup the Session Hooks into the Cast Sessions. The Video player is using [AVPlayer](https://docs.microsoft.com/en-us/dotnet/api/avfoundation.avplayer?view=xamarin-ios-sdk-12) and the setup for that is as you would normally for video playback. 
@@ -172,6 +174,8 @@ CastContext.SharedInstance.UseDefaultExpandedMediaContrtrue;
 ```
 
 ## Xamarin.Android
+
+<img src='Images/Droid_Cast_DEMO.gif'>
 
 ### Setup Player
 
@@ -337,6 +341,7 @@ The dev loop is easy as you can use simulators to test the Cast functionality, a
 As for Testing, unfortunately as seen in the Google [Documentation](https://developers.google.com/cast/docs/testing) it is still manual only and there is no automation support for this at the moment.
 
 The Cast Session Management hooks into the video player events pretty agnostic to the player itself, so if you are using a custom player or any third party non-native video player, it should still be possible to connect it with the Chromecast SDK. 
+
 
 ## Wrap-up
 
