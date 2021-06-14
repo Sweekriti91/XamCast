@@ -1,13 +1,4 @@
----
-post_title: 'Implementing Chromecast with Xamarin.Forms'
-username: sweeky-satpathy
-microsoft_alias: 'swsat'
-featured_image: 
-categories: Android, iOS, Xamarin.Forms, Developers
-tags: xamarin, xamarin.forms,custom renderers, chromecast
-summary: Learn how to integrate Chromecast into your Xamarin.Forms application without complicated bindings, simply using Custom Renderers.
-desired_publication_date: '2021-06-17'
----
+# Implementing Chromecast with Xamarin.Forms
 
 If you are creating a video or even audio app, you can add Chromecast Support for it easily. If the video/audio browsing app is built using Xamarin.Forms, this post walks you through how to add the support for video Chromecast through 2 ways, using a Xamarin.Forms Page Renderer or via a embedded native page. Before we get started, there are a few initial steps to be taken.
 
@@ -33,7 +24,7 @@ The Google Chromecast Framework is provided to us as nugets maintained by the Xa
 
 The Chromecast framework is developed to work with the Native Video Players or with any other third-party Video Player Control. Integrating the Cast into the app involves adding three main UI components and adding Session Management between the video player and Cast Framework. The UI components are the Cast button, the Mini Player and the Expanded Player. Each of these controls are a part of the framework with default styling and can be customized as needed. For session management, the based on the Cast Connection state, the system uses the Video Player session management and the Cast Session Management to control app behavior and state of the UI components.
 
-![Flow Chart Diagram showing the Connected/Disconnected Process for Chromecast](ChromecastProcess.png)
+![Flow Chart Diagram showing the Connected/Disconnected Process for Chromecast](Images/ChromecastProcess.png)
 
 Each of these events are tied to the State of the Video Player and Chromecast. First, let's setup the shared UI components, that appear on both the native players as well as the shared views in the Xamarin.Forms project.
 
@@ -51,7 +42,7 @@ The two UI Components that are native but need to be displayed as components in 
 
 ## Xamarin.iOS
 
-![Animation of Xamarin.Forms iOS app connecting to Chromecast to cast Video](iOS_Cast_DEMO.gif)
+![Animation of Xamarin.Forms iOS app connecting to Chromecast to cast Video](Images/iOS_Cast_DEMO.gif)
 
 ### Setup Player
 
@@ -180,7 +171,7 @@ CastContext.SharedInstance.UseDefaultExpandedMediaControl = true;
 
 ## Xamarin.Android
 
-![Animation of Xamarin.Forms Android app connecting to Chromecast to cast Video](Droid_Cast_DEMO.gif)
+![Animation of Xamarin.Forms Android app connecting to Chromecast to cast Video](Images/Droid_Cast_DEMO.gif)
 
 ### Setup Player
 
